@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  samp-server-db:
+    container_name: samp-server-db
+    image: mysql:8
+    restart: always
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password'] 
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-abcd1234}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-rpgmgs}
+    networks:
+      - brz
+    volumes:
+      - mysql_files:/var/lib/mysql
+
+networks:
+  brz:
+    driver: bridge
+
+volumes:
+  mysql_files:
+    driver: local
+    
