@@ -46,7 +46,7 @@ RUN sampctl build main
 FROM build as run_tests
 
 RUN sampctl build tests
-RUN if ! sampctl run | grep -q 'ALL TESTS PASSED'; then \
+RUN if ! sampctl run | grep -q 'ALL TESTS PASSED2'; then \
         echo "::error title=Unit Tests Failed::Check Docker build logs for more information."; \
         exit 1; \
     fi
