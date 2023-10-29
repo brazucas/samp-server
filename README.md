@@ -1,63 +1,29 @@
-# rpgmgs
+[![server-ci](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml/badge.svg)](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml)
 
-[![sampctl](https://img.shields.io/badge/sampctl-rpgmgs-2f2f2f.svg?style=for-the-badge)](https://github.com/pedropapa/rpgmgs)
+# samp-server
 
-<!--
-Short description of your library, why it's useful, some examples, pictures or
-videos. Link to your forum release thread too.
+Our SA-MP server codebase.
 
-Remember: You can use "forumfmt" to convert this readme to forum BBCode!
+## [![sampctl](https://img.shields.io/badge/sampctl-brz-2f2f2f.svg?style=for-the-badge)](https://github.com/pedropapa/samp-server)
 
-What the sections below should be used for:
+This API uses sampctl to manage dependencies, compile and run the server. You can find more information about sampctl [here](https://github.com/Southclaws/sampctl).
 
-`## Installation`: Leave this section un-edited unless you have some specific
-additional installation procedure.
+# 👨‍💻 Contributing
 
-`## Testing`: Whether your library is tested with a simple `main()` and `print`,
-unit-tested, or demonstrated via prompting the player to connect, you should
-include some basic information for users to try out your code in some way.
+Feel free to contribute to the project, whether it's fixing bugs, adding new features or improving the documentation.
 
-And finally, maintaining your version number`:
+## 🧞 Basic Commands
 
-* Follow [Semantic Versioning](https://semver.org/)
-* When you release a new version, update `VERSION` and `git tag` it
-* Versioning is important for sampctl to use the version control features
+All avaliable commands in [pawn.json](pawn.json):
 
-Happy Pawning!
--->
+| Command                | Action                                               |
+| :--------------------- | :--------------------------------------------------- |
+| `sampctl ensure`       | Ensures all project dependencies (Only needed once)  |
+| `sampctl build main`   | Build the main gamemode                              |
+| `sampctl build tests`  | Build the gamemode for running tests                 |
+| `sampctl run`          | Runs the server with the built gamemode              |
+| `docker-compose up`    | Uses Docker for running dev environment dependencies |
 
-## Installation
+## 👀 Interested in joining the team? 
 
-Simply install to your project:
-
-```bash
-sampctl package install pedropapa/rpgmgs
-```
-
-Include in your code and begin using the library:
-
-```pawn
-#include <rpgmgs>
-```
-
-## Usage
-
-<!--
-Write your code documentation or examples here. If your library is documented in
-the source code, direct users there. If not, list your API and describe it well
-in this section. If your library is passive and has no API, simply omit this
-section.
--->
-
-## Testing
-
-<!--
-Depending on whether your package is tested via in-game "demo tests" or
-y_testing unit-tests, you should indicate to readers what to expect below here.
--->
-
-To test, simply run the package:
-
-```bash
-sampctl package run
-```
+Keep in touch with us at [Discord](http://discord.brz.gg).
