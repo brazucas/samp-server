@@ -1,6 +1,6 @@
-name: Build project
+name: server-ci
 
-run-name: Running CI by @${{ github.actor }}
+run-name: Running server-ci by @${{ github.actor }}
 
 on:
   push:
@@ -13,8 +13,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
-    name: Run tests
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -25,7 +25,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
-      - name: Build and push Docker image
+      - name: Run tests
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -34,3 +34,8 @@ jobs:
           build-args: |
             "SAMPCTL_GITHUB_TOKEN=${{ secrets.GH_PAT }}"
           push: false
+      - name: Check if tests passed
+        if: failure()
+        run: |
+          echo "::error title=Unit Tests Failed::Check Docker build logs for more information."
+          exit 1

@@ -1,3 +1,5 @@
+[![server-ci](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml/badge.svg)](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml)
+
 # samp-server
 
 Our SA-MP server codebase.
