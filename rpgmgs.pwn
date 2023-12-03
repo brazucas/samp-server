@@ -18,8 +18,6 @@ public OnGameModeInit()
     #if defined RUN_TESTS
         SendRconCommand("exit");
     #endif
-
-    SendRconCommand("loadfs brz_player_authentication");
     
     return 1;
 }
