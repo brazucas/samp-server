@@ -1,0 +1,135 @@
+name: Production Deployment
+
+run-name: Deploy ref ${{ github.event.inputs.ref }} by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        type: string
+        description: 'The branch or tag ref to deploy'
+
+jobs:
+  get_ref:
+    runs-on: ubuntu-latest
+    outputs:
+      full: ${{ steps.ref.outputs.full }}
+      short: ${{ steps.ref.outputs.short }}
+    steps:
+      - name: Git Ref
+        id: ref
+        uses: brazucas/samp-rpgmgs/.github/actions/get-ref@master
+        with:
+          commit_hash: ${{ github.event.inputs.ref }}
+
+  terraform:
+    runs-on: ubuntu-latest
+    outputs:
+        samp_server_ip_address: ${{ steps.get_ip_address.outputs.stdout }}
+    steps:
+      - name: Clone the repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup the Terraform CLI
+        uses: hashicorp/setup-terraform@v2
+      - name: Setup AWS Credentials
+        run: |
+          mkdir ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
+          echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+          AWS_PROFILE=default && echo AWS_PROFILE=$AWS_PROFILE >> $GITHUB_ENV
+      - name: Initialize the Terraform working directory
+        working-directory: .cicd/terraform
+        id: init
+        run: terraform init -input=false
+      - name: Apply the Terraform execution plan
+        working-directory: .cicd/terraform
+        id: plan
+        run: terraform apply -no-color -auto-approve
+        env:
+          TF_VAR_github_pat: ${{ secrets.GH_PAT }}
+      - name: get server ip address
+        working-directory: .cicd/terraform
+        id: get_ip_address
+        run: terraform output --raw samp_server_ip_address
+
+  deploy_server:
+    needs: [terraform, get_ref]
+    name: Deploy server changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy docker-compose.yml file
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: .cicd/server/docker-compose.yml
+          remote: docker-compose.yml
+          host: ${{ needs.terraform.outputs.samp_server_ip_address }}
+          username: ec2-user
+          privateKey: ${{ secrets.AWS_PRIVATE_KEY  }}
+          port: 22
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "lts/*"
+
+      - name: Deploy server
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ needs.terraform.outputs.samp_server_ip_address }}
+          username: ec2-user
+          key: ${{ secrets.AWS_PRIVATE_KEY  }}
+          port: 22
+          script: |
+            sudo docker pull ghcr.io/${{ github.repository }}/samp_rpgmgs:${{ needs.get_ref.outputs.full }}
+
+  restart_server:
+    needs: [terraform, deploy_server, get_ref]
+    name: Run migrations and Restart instance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run migrations
+        continue-on-error: true
+        run: |
+          yarn install
+          npx prisma migrate deploy
+        env: 
+          DATABASE_URL: mysql://${{ vars.DATABASE_USERNAME }}:${{ vars.DATABASE_PASSWORD }}@${{ needs.terraform.outputs.samp_server_ip_address }}:${{ vars.DATABASE_PORT }}/${{ vars.DATABASE_NAME }}
+      - name: Restart server
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ needs.terraform.outputs.samp_server_ip_address }}
+          username: ec2-user
+          key: ${{ secrets.AWS_PRIVATE_KEY  }}
+          port: 22
+          script: |
+            sudo SERVER_IMAGE=ghcr.io/${{ github.repository }}/samp_rpgmgs:${{ needs.get_ref.outputs.full }} MYSQL_ROOT_PASSWORD=${{ vars.DATABASE_PASSWORD }} MYSQL_DATABASE=${{ vars.DATABASE_NAME }} MYSQL_PORT=${{ vars.DATABASE_PORT }} docker-compose up -d
+            sudo docker system prune -f
+
+  notify:
+    needs: restart_server
+    name: Notify new deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 50
+      - name: Set environment variables
+        continue-on-error: true
+        run: |
+          COMMITS_COUNT=$(git rev-list --count "${{github.event.before}}...${{github.event.after}}")
+          AUTHOR=${{ github.event.pusher.name }}
+          echo "COMMITS_COUNT=$COMMITS_COUNT" >> $GITHUB_ENV
+          echo "AUTHOR=$AUTHOR" >> $GITHUB_ENV
+      - name: Notify Discord
+        continue-on-error: true
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          args: O servidor SA-MP está sendo atualizado com (${{ env.COMMITS_COUNT }} mudanças realizadas por ${{ env.AUTHOR }}) e será reiniciado em breve.

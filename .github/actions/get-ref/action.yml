@@ -1,0 +1,41 @@
+name: "Get git commit ref"
+
+description: "Github action to get git commit ref"
+
+inputs:
+  commit_hash:
+    description: "Github Commit Hash"
+    required: false
+
+outputs:
+  full:
+    description: "Full SHA"
+    value: ${{ steps.ref.outputs.full }}
+  short:
+    description: "Short SHA"
+    value: ${{ steps.ref.outputs.short }}
+
+runs:
+  using: "composite"
+  steps:
+  - name: Get Checkout Branch
+    id: checkout
+    shell: bash
+    run: |
+      branch=${{ github.ref_name }}
+      if  [ ! -z ${{ inputs.commit_hash }} ]; then
+        branch=${{ inputs.commit_hash }}
+      fi
+      echo "branch=$branch" >> $GITHUB_OUTPUT
+
+  - name: Checkout Source Code
+    uses: actions/checkout@v3
+    with:
+      ref: ${{ steps.checkout.outputs.branch }}
+
+  - name: Get Ref
+    id: ref
+    shell: bash
+    run: |
+      echo "full=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+      echo "short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
