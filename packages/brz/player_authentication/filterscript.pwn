@@ -43,10 +43,6 @@ public OnPlayerConnect(playerid)
 		InitialisePlayer(playerid);
 	}
 
-    new message[64];
-    format(message, sizeof message, "Welcome, %s! please register to start playing.", playerName);
-    SendClientMessage(playerid, 0xFFFFFFAA, message);
-
 	BRZSpawnPlayer(playerid);
 
 	if (PlayerData[playerid][PLAYER_REGISTERED] == false) {
@@ -60,13 +56,7 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
-	new message[64];
-
-	format(message, sizeof message, "%s has left the server. Goodbye!", PlayerData[playerid][PLAYER_NAME]);
-	SendClientMessageToAll(0xFFFFFFAA, message);
-
 	PlayerData[playerid][PLAYER_LOGGED_IN] = false;
-
 	return 1;
 }
 
@@ -106,7 +96,7 @@ stock ShowRegisterDialog(playerid)
 			PlayerData[playerid][PLAYER_REGISTERED] = true;
 			PlayerData[playerid][PLAYER_LOGGED_IN] = true;
 
-			SendClientMessage(playerid, 0xFFFFFFFF, "You have successfully registered. Automatically logging you in.");
+			PublishPlayerLoginAction(playerid);
 		} else {
 			ShowRegisterDialog(playerid);
 		}
@@ -126,7 +116,7 @@ stock ShowLoginDialog(playerid)
 		if (response) {
 			if (strcmp(inputtext, PlayerData[playerid][PLAYER_PASSWORD]) == 0) {
 				PlayerData[playerid][PLAYER_LOGGED_IN] = true;
-				SendClientMessage(playerid, 0xFFFFFFFF, "You have successfully logged in.");
+				PublishPlayerLoginAction(playerid);
 			} else {
 				SendClientMessage(playerid, 0xFFFFFFFF, "You have entered an incorrect password.");
 				ShowLoginDialog(playerid);
@@ -137,6 +127,13 @@ stock ShowLoginDialog(playerid)
 		return 1;
 	}
 	Dialog_ShowCallback(playerid, using inline Handler, DIALOG_STYLE_PASSWORD, "Welcome back to BRZ.GG", "Please enter your password to login.", "Login", "Cancel");
+
+	return 1;
+}
+
+stock PublishPlayerLoginAction(playerid)
+{
+	CallRemoteFunction("BRZPlayerAuthenticated", "d", playerid);
 
 	return 1;
 }
