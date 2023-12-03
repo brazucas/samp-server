@@ -42,7 +42,6 @@ hook function OnDatasourcesReady()
 {
 	MySQLMigrations_ExecFile("20230916_player_table");
 
-    MySQLMigrations_ExecFile("20231104_feature_toggles");
     return continue();
 }
 
