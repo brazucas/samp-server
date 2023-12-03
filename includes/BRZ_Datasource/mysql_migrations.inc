@@ -2,7 +2,6 @@
 #include <YSI_Coding\y_hooks>
 
 #define MIGRATIONS_PATH "database/mysql/migrations/"
-#define MAX_QUERY_SIZE 512
 
 static enum MigrationInfo {
     bool:Executed,
@@ -42,6 +41,7 @@ public MySQLMigrations_ExecFile(const filename[])
 hook function OnDatasourcesReady()
 {
 	MySQLMigrations_ExecFile("20230916_player_table");
+
     return continue();
 }
 

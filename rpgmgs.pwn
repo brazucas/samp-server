@@ -1,6 +1,9 @@
+#define MAX_QUERY_SIZE 512
+
 #include <a_samp>
 #include <brz_core>
 #include <brz_datasource>
+#include <BRZ_Core\feature_toggles>
 
 #if defined RUN_TESTS
     #include <tests\main>
