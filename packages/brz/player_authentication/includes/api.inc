@@ -1,6 +1,6 @@
 stock PublishPlayerLoginAction(playerid)
 {
-	CallRemoteFunction("OnBRZPlayerAuthenticated", "d", playerid);
+	CallRemoteFunction("OnBRZPlayerAuth", "d", playerid);
 
 	return 1;
 }
