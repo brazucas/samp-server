@@ -69,10 +69,3 @@ public ShowLoginDialog(playerid)
 
 	return 1;
 }
-
-static stock PublishPlayerLoginAction(playerid)
-{
-	CallRemoteFunction("BRZPlayerAuthenticated", "d", playerid);
-
-	return 1;
-}
