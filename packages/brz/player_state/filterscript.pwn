@@ -15,6 +15,7 @@ public OnFilterScriptExit()
 
 hook OnBRZPlayerAuth(playerid)
 {
+	printf("OnBRZPlayerAuth(%d)", playerid);
 	TogglePlayerSpectating(playerid, false);
 	SetSpawnInfo(playerid, 0, 0, 1958.33, 1343.12, 15.36, 269.15, 26, 36, 28, 150, 0, 0);
 	SpawnPlayer(playerid);

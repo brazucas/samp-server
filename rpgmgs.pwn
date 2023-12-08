@@ -21,6 +21,7 @@ public OnGameModeInit()
 
     SendRconCommand("loadfs brz_player_authentication");
     SendRconCommand("loadfs brz_player_state");
+    SendRconCommand("loadfs brz_player_voip");
     
     return 1;
 }
