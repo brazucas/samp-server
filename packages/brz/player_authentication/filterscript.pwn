@@ -1,6 +1,7 @@
 #include <a_samp>
 #include <BRZ_Core\feature_toggles>
 #include <state>
+#include <api>
 #include <samp_impl>
 
 public OnFilterScriptInit()
