@@ -6,4 +6,4 @@
 ### Callbacks
 | Callback                             | Action                                               |
 | :----------------------------------- | :--------------------------------------------------- |
-| `OnBRZPlayerAuthenticated(playerid)` | Called when a player authenticates successfully      |
+| `OnBRZPlayerAuth(playerid)` | Called when a player authenticates successfully      |
