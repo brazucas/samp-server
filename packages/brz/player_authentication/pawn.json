@@ -11,7 +11,7 @@
       "args": ["-;+", "-(+", "-O1", "-Z+"],
       "input": "filterscript.pwn",
       "output": "../../../filterscripts/brz_player_authentication.amx",
-      "includes": ["../../../includes"],
+      "includes": ["../../../includes", "includes"],
       "compiler": {},
       "constants": {
         "YSI_NO_HEAP_MALLOC": "1"
