@@ -1,0 +1,21 @@
+{
+  "user": "pedropapa",
+  "repo": "player_authentication",
+  "tag": "0.0.1",
+  "entry": "test.pwn",
+  "output": "test.amx",
+  "dependencies": ["pawn-lang/samp-stdlib", "pawn-lang/YSI-Includes@5.x"],
+  "builds": [
+    {
+      "name": "main",
+      "args": ["-;+", "-(+", "-O1", "-Z+"],
+      "input": "filterscript.pwn",
+      "output": "../../../filterscripts/brz_player_authentication.amx",
+      "includes": ["../../../includes", "includes"],
+      "compiler": {},
+      "constants": {
+        "YSI_NO_HEAP_MALLOC": "1"
+      }
+    }
+  ]
+}
