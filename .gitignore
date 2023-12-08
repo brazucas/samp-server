@@ -25,7 +25,7 @@ pawn.lock
 server.cfg
 
 # Plugins directory
-plugins/
+plugins/*
 
 # binaries
 *.exe
@@ -39,9 +39,13 @@ samp-npc
 logs/
 server_log.txt
 crashinfo.txt
+*.log
 
 # Ban list
 samp.ban
+
+# Voip
+control.cfg
 
 #
 # Common files
@@ -52,3 +56,6 @@ samp.ban
 .env
 
 .vscode
+
+!plugins/sampvoice.dll
+!plugins/sampvoice.so
