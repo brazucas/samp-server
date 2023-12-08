@@ -3,7 +3,7 @@
 forward ShowRegisterDialog(playerid);
 forward ShowLoginDialog(playerid);
 
-stock BRZSpawnPlayer(playerid)
+stock StateSpawnPlayer(playerid)
 {
 	SetSpawnInfo(playerid, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	SpawnPlayer(playerid);

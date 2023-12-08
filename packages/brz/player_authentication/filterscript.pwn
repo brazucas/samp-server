@@ -35,7 +35,7 @@ public OnPlayerConnect(playerid)
 		InitialisePlayer(playerid);
 	}
 
-	BRZSpawnPlayer(playerid);
+	StateSpawnPlayer(playerid);
 
 	if (IsPlayerRegistered(playerid)) {
 		ShowLoginDialog(playerid);
@@ -54,6 +54,6 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	BRZSpawnPlayer(playerid);
+	StateSpawnPlayer(playerid);
 	return 1;
 }
