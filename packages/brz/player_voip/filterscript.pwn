@@ -1,7 +1,17 @@
 #include <a_samp>
 #include <YSI_Coding\y_hooks>
-#include <sampvoice>
+
+#if defined BRZ_VOIP_ENABLED
+	#include <sampvoice>
+#else
+	#include <sampvoice_mock>
+#endif
+
 #include <state>
+#include <api>
+#include <brz_scripting>
+
+#define VOIP_NAMESPACE "BRZ_VOIP"
 
 #define GLOBAL_CHANNEL 0
 #define  LOCAL_CHANNEL 1
@@ -13,8 +23,15 @@ public OnFilterScriptInit()
 {
 	print("========================BRZ_PLAYER_VOIP STARTED========================");
 
-    // SvEnableDebug();
+	if (!IsBRZVoipEnabled()) {
+		log_info(VOIP_NAMESPACE, "VOIP is not enabled");
+		return 1;
+	}
 
+	#if defined BRZ_VOIP_DEBUG
+    	SvEnableDebug();
+	#endif
+	
     gstream = SvCreateStream();
 
 	return 1;
@@ -23,6 +40,10 @@ public OnFilterScriptInit()
 public OnFilterScriptExit()
 {
 	print("========================BRZ_PLAYER_VOIP STOPPED========================");
+
+	if (!IsBRZVoipEnabled()) {
+		return 1;
+	}
 
 	if (gstream != SV_NONE)
     {
@@ -35,6 +56,10 @@ public OnFilterScriptExit()
 
 public OnPlayerConnect(playerid)
 {
+	if (!IsBRZVoipEnabled()) {
+		return 1;
+	}
+
     if (SvGetVersion(playerid) == 0) {
         return SetVoipSupported(playerid, false);
     }
@@ -73,6 +98,10 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
+	if (!IsBRZVoipEnabled()) {
+		return 1;
+	}
+
     if (lstream[playerid] != SV_NONE)
     {
         SvDeleteStream(lstream[playerid]);
