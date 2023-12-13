@@ -13,15 +13,15 @@ public OnGameModeInit()
 {
     #if !defined RUN_TESTS
         BRZ_Datasource_InitDatasources();
+
+        SendRconCommand("loadfs brz_player_authentication");
+        SendRconCommand("loadfs brz_player_state");
+        SendRconCommand("loadfs brz_player_voip");
     #endif
 
     #if defined RUN_TESTS
         SendRconCommand("exit");
     #endif
-
-    SendRconCommand("loadfs brz_player_authentication");
-    SendRconCommand("loadfs brz_player_state");
-    SendRconCommand("loadfs brz_player_voip");
     
     return 1;
 }
