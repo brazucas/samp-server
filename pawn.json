@@ -11,7 +11,7 @@
   "local": true,
   "runtime": {
     "version": "0.3.7",
-    "plugins": ["sampvoice"],
+    "plugins": [],
     "mode": "server",
     "rcon_password": "password",
     "port": 7778,
