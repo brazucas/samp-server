@@ -19,8 +19,6 @@ stock InitialiseMoneyHud(playerid)
     PlayerTextDrawSetOutline(playerid, moneyTextdraws[playerid][TD_MONEY], 1);
     PlayerTextDrawSetProportional(playerid, moneyTextdraws[playerid][TD_MONEY], 1);
     PlayerTextDrawSetShadow(playerid, moneyTextdraws[playerid][TD_MONEY], 1);
-
-    InitialiseHungerHud();
 }
 
 stock ShowPlayerMoney(playerid)
