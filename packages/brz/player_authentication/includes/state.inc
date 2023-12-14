@@ -44,7 +44,7 @@ stock SetIsPlayerRegistered(playerid, bool:registered)
     return 1;
 }
 
-stock bool:IsPlayerLoggedIn(playerid)
+stock bool:_IsPlayerLoggedIn(playerid)
 {
     return PlayerData[playerid][PLAYER_LOGGED_IN];
 }
