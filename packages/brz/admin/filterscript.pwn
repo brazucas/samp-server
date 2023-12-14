@@ -1,5 +1,8 @@
 #include <a_samp>
 #include <YSI_Visual\y_commands>
+#include <BRZ_Scripting\brz_scripting_logging>
+
+#define LOG_NAMESPACE "brz_admin"
 
 public OnFilterScriptInit()
 {
@@ -21,7 +24,7 @@ public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)
 
 	if (IsPlayerAdmin(playerid)) {
     	SetPlayerPosFindZ(playerid, fX, fY, fZ);
-		printf("Player %s teleported to %f, %f, %f, heading: %f", playerName, fX, fY, fZ, angle);
+		log_info(LOG_NAMESPACE, "Player %s teleported to %f, %f, %f, heading: %f", playerName, fX, fY, fZ, angle);
 	}
 
     return 1;
@@ -36,7 +39,7 @@ YCMD:logpos(playerid, const params[], help)
 	GetPlayerPos(playerid, x, y, z);
 	GetPlayerFacingAngle(playerid, angle);
 
-	printf("Player %s position: %f, %f, %f, heading: %f", playerName, x, y, z, angle);
+	log_info(LOG_NAMESPACE, "Player %s position: %f, %f, %f, heading: %f", playerName, x, y, z, angle);
 
 	return 1;
 }
