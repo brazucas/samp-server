@@ -28,13 +28,6 @@ public OnFilterScriptInit()
 	return 1;
 }
 
-public OnPlayerConnect(playerid)
-{
-	InitialisePlayerHuds(playerid);
-	InitialisePlayerHungerState(playerid);
-	return 1;
-}
-
 public OnPlayerDisconnect(playerid)
 {
 	DestroyPlayerMoneyHud(playerid);
@@ -57,11 +50,14 @@ public OnFilterScriptExit()
 
 hook OnBRZPlayerAuth(playerid)
 {
-	printf("OnBRZPlayerAuth(%d)", playerid);
 	TogglePlayerSpectating(playerid, false);
 
 	SetSpawnInfo(playerid, 0, 0, 1743.248901, -1948.481933, 14.117187, 178.015930, 26, 36, 28, 150, 0, 0);
 	SpawnPlayer(playerid);
+
+	InitialisePlayerHuds(playerid);
+	InitialisePlayerHungerState(playerid);
+
 	return 1;
 }
 

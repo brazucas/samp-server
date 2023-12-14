@@ -80,7 +80,6 @@ stock DestroyPlayerHungerHudForAll()
 
 stock UpdateHungerHud(playerid, level) {
 	if (IsPlayerConnected(playerid)) {
-		printf("UpdateHungerHud: %d %d", playerid, level);
 	    new hungerLevel = 100 - level;
 
 	    if (hungerLevel<=0){
