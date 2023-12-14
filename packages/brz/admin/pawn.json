@@ -1,0 +1,19 @@
+{
+  "user": "pedropapa",
+  "repo": "admin",
+  "tag": "0.0.1",
+  "entry": "test.pwn",
+  "output": "test.amx",
+  "dependencies": ["pawn-lang/samp-stdlib", "pawn-lang/YSI-Includes@5.x"],
+  "builds": [
+    {
+      "name": "main",
+      "args": ["-;+", "-(+", "-O1", "-Z+"],
+      "input": "filterscript.pwn",
+      "output": "../../../filterscripts/brz_admin.amx",
+      "includes": ["../../../includes"],
+      "compiler": {},
+      "constants": {}
+    }
+  ]
+}
