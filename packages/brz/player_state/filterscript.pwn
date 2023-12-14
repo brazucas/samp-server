@@ -26,7 +26,8 @@ hook OnBRZPlayerAuth(playerid)
 {
 	printf("OnBRZPlayerAuth(%d)", playerid);
 	TogglePlayerSpectating(playerid, false);
-	SetSpawnInfo(playerid, 0, 0, 1958.33, 1343.12, 15.36, 269.15, 26, 36, 28, 150, 0, 0);
+
+	SetSpawnInfo(playerid, 0, 0, 1743.248901, -1948.481933, 14.117187, 178.015930, 26, 36, 28, 150, 0, 0);
 	SpawnPlayer(playerid);
 	return 1;
 }
@@ -36,4 +37,6 @@ public OnPlayerSpawn(playerid)
 	if (IsPlayerLoggedIn(playerid)) {
 		ShowHudForPlayer(playerid);
 	}
+
+	return 1;
 }
