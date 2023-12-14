@@ -1,9 +1,18 @@
 #include <a_samp>
+#include <BRZ_Scripting\brz_apis>
+#include <hud>
 #include <YSI_Coding\y_hooks>
 
 public OnFilterScriptInit()
 {
 	print("========================BRZ_PLAYER_STATE STARTED========================");
+	InitialiseServerHud();
+	return 1;
+}
+
+public OnPlayerConnect(playerid)
+{
+	InitialisePlayerHud(playerid);
 	return 1;
 }
 
@@ -20,4 +29,11 @@ hook OnBRZPlayerAuth(playerid)
 	SetSpawnInfo(playerid, 0, 0, 1958.33, 1343.12, 15.36, 269.15, 26, 36, 28, 150, 0, 0);
 	SpawnPlayer(playerid);
 	return 1;
+}
+
+public OnPlayerSpawn(playerid)
+{
+	if (IsPlayerLoggedIn(playerid)) {
+		ShowHudForPlayer(playerid);
+	}
 }
