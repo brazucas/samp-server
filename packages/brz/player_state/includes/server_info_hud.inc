@@ -38,11 +38,22 @@ stock InitialiseServerHud()
 	TextDrawUseBox(serverTextdraws[TD_FORCE], 1);
 	TextDrawBoxColor(serverTextdraws[TD_FORCE], 255);
 	TextDrawTextSize(serverTextdraws[TD_FORCE], 111.000000, 11.000000);
+
+	return 1;
 }
 
-stock ShowServerHud(playerid)
+stock ShowServerInfoHud(playerid)
 {
     TextDrawShowForPlayer(playerid, Text:serverTextdraws[TD_BRZ_HEADLINE]);
     TextDrawShowForPlayer(playerid, Text:serverTextdraws[TD_BRZ_URL]);
     TextDrawShowForPlayer(playerid, Text:serverTextdraws[TD_FORCE]);
+	return 1;
+}
+
+stock DestroyServerInfoHud()
+{
+	TextDrawDestroy(Text:serverTextdraws[TD_BRZ_HEADLINE]);
+	TextDrawDestroy(Text:serverTextdraws[TD_BRZ_URL]);
+	TextDrawDestroy(Text:serverTextdraws[TD_FORCE]);
+	return 1;
 }
