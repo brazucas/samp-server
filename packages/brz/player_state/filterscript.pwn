@@ -14,7 +14,7 @@ public OnFilterScriptInit()
 
 	foreach (new playerid : Player) {
 		if (IsPlayerLoggedIn(playerid)) {
-			InitialisePlayerHud(playerid);
+			InitialisePlayerHuds(playerid);
 			ShowPlayerHuds(playerid);
 		}
 	}
@@ -24,7 +24,13 @@ public OnFilterScriptInit()
 
 public OnPlayerConnect(playerid)
 {
-	InitialisePlayerHud(playerid);
+	InitialisePlayerHuds(playerid);
+	return 1;
+}
+
+public OnPlayerDisconnect(playerid)
+{
+	DestroyPlayerMoneyHud(playerid);
 	return 1;
 }
 
@@ -52,6 +58,13 @@ public OnPlayerSpawn(playerid)
 	if (IsPlayerLoggedIn(playerid)) {
 		ShowPlayerHuds(playerid);
 	}
+
+	return 1;
+}
+
+stock InitialisePlayerHuds(playerid)
+{
+	InitialiseMoneyHud(playerid);
 
 	return 1;
 }

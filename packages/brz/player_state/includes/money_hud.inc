@@ -8,7 +8,7 @@ static enum Textdraw
 
 new PlayerText:moneyTextdraws[MAX_PLAYERS][Textdraw];
 
-stock InitialisePlayerHud(playerid)
+stock InitialiseMoneyHud(playerid)
 {
     moneyTextdraws[playerid][TD_MONEY] = CreatePlayerTextDraw(playerid, 612.000000,76.000000, "~g~R$00000000");
     PlayerTextDrawAlignment(playerid, moneyTextdraws[playerid][TD_MONEY], 3);
@@ -33,4 +33,9 @@ stock DestroyPlayerMoneyHudForAll()
     foreach (new playerid : Player) {
         PlayerTextDrawDestroy(playerid, PlayerText:moneyTextdraws[playerid][TD_MONEY]);
     }
+}
+
+stock DestroyPlayerMoneyHud(playerid)
+{
+    PlayerTextDrawDestroy(playerid, PlayerText:moneyTextdraws[playerid][TD_MONEY]);
 }
