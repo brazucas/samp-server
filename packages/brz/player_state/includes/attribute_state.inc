@@ -24,6 +24,11 @@ new attributeUpdateCallback[PlayerAttributeType][32] = {
     {"OnPlayerHungerUpdate"}
 };
 
+new maxAttributeLevelReachedCb[PlayerAttributeType][32] = {
+    {"OnPlayerMaxThirstLevelReached"},
+    {"OnPlayerMaxHungerLevelReached"}
+};
+
 public IncrementAttributeLevel(playerid, PlayerAttributeType:type)
 {
     _SetPlayerAttributeLevel(playerid, type, _GetPlayerAttributeLevel(playerid, type) + DEFAULT_ATTRIBUTE_INCREMENT);
@@ -68,11 +73,14 @@ stock _SetPlayerAttributeLevel(playerid, PlayerAttributeType:type, level)
 
     if (level > MAX_ATTRIBUTE_LEVEL) {
         level = MAX_ATTRIBUTE_LEVEL;
+
+        CallLocalFunction(maxAttributeLevelReachedCb[type], "i", playerid);
     }
 
     playerAttribute[playerid][type][LEVEL] = level;
 
     CallLocalFunction(attributeUpdateCallback[type], "ii", playerid, level);
+    
     return 1;
 }
 
