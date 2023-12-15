@@ -4,8 +4,7 @@
 #include <huds\hunger_hud>
 #include <huds\thirst_hud>
 #include <huds\server_info_hud>
-#include <states\hunger_state>
-#include <states\thirst_state>
+#include <attribute_state>
 #include <api>
 #include <YSI_Coding\y_hooks>
 #include <YSI_Data\y_foreach>
@@ -21,8 +20,7 @@ public OnFilterScriptInit()
 			InitialisePlayerHuds(playerid);
 			ShowPlayerHuds(playerid);
 
-			InitialisePlayerHungerState(playerid);
-			InitialisePlayerThirstState(playerid);
+			InitialisePlayerAttributeStates(playerid);
 		}
 	}
 
@@ -32,12 +30,10 @@ public OnFilterScriptInit()
 public OnPlayerDisconnect(playerid)
 {
 	DestroyPlayerMoneyHud(playerid);
-
 	DestroyPlayerHungerHud(playerid);
-	DestroyPlayerHungerState(playerid);
-
 	DestroyPlayerThirstHud(playerid);
-	DestroyPlayerThirstState(playerid);
+
+	DestroyPlayerAttributeStates(playerid);
 	return 1;
 }
 
@@ -50,8 +46,7 @@ public OnFilterScriptExit()
 	DestroyPlayerHungerHudForAll();
 	DestroyPlayerThirstHudForAll();
 
-	DestroyHungerStateForAll();
-	DestroyThirstStateForAll();
+	DestroyAttributeStateForAll();
 	return 1;
 }
 
@@ -63,8 +58,7 @@ hook OnBRZPlayerAuth(playerid)
 	SpawnPlayer(playerid);
 
 	InitialisePlayerHuds(playerid);
-	InitialisePlayerHungerState(playerid);
-	InitialisePlayerThirstState(playerid);
+	InitialisePlayerAttributeStates(playerid);
 
 	return 1;
 }
