@@ -5,6 +5,7 @@
 #include <huds\thirst_hud>
 #include <huds\server_info_hud>
 #include <states\hunger_state>
+#include <states\thirst_state>
 #include <api>
 #include <YSI_Coding\y_hooks>
 #include <YSI_Data\y_foreach>
@@ -14,7 +15,6 @@ public OnFilterScriptInit()
 	print("========================BRZ_PLAYER_STATE STARTED========================");
 	
 	InitialiseServerHud();
-	InitialiseThirstHud();
 
 	foreach (new playerid : Player) {
 		if (IsPlayerLoggedIn(playerid)) {
@@ -22,6 +22,7 @@ public OnFilterScriptInit()
 			ShowPlayerHuds(playerid);
 
 			InitialisePlayerHungerState(playerid);
+			InitialisePlayerThirstState(playerid);
 		}
 	}
 
@@ -31,8 +32,12 @@ public OnFilterScriptInit()
 public OnPlayerDisconnect(playerid)
 {
 	DestroyPlayerMoneyHud(playerid);
+
 	DestroyPlayerHungerHud(playerid);
 	DestroyPlayerHungerState(playerid);
+
+	DestroyPlayerThirstHud(playerid);
+	DestroyPlayerThirstState(playerid);
 	return 1;
 }
 
@@ -40,11 +45,13 @@ public OnFilterScriptExit()
 {
 	print("========================BRZ_PLAYER_STATE STOPPED========================");
 	DestroyServerInfoHud();
+
 	DestroyPlayerMoneyHudForAll();
 	DestroyPlayerHungerHudForAll();
-	DestroyPlayerThirstHud();
+	DestroyPlayerThirstHudForAll();
 
 	DestroyHungerStateForAll();
+	DestroyThirstStateForAll();
 	return 1;
 }
 
@@ -57,6 +64,7 @@ hook OnBRZPlayerAuth(playerid)
 
 	InitialisePlayerHuds(playerid);
 	InitialisePlayerHungerState(playerid);
+	InitialisePlayerThirstState(playerid);
 
 	return 1;
 }
@@ -74,6 +82,7 @@ stock InitialisePlayerHuds(playerid)
 {
 	InitialiseMoneyHud(playerid);
 	InitialiseHungerHud(playerid);
+	InitialiseThirstHud(playerid);
 
 	return 1;
 }
