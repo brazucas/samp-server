@@ -1,5 +1,4 @@
 #include <YSI_Data\y_foreach>
-#include <YSI_Coding\y_hooks>
 
 forward OnPlayerHungerUpdate(playerid, level);
 
