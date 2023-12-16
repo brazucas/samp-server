@@ -2,7 +2,6 @@
   "name": "samp_docs",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
@@ -29,12 +28,14 @@
     "@docusaurus/module-type-aliases": "3.0.1",
     "@docusaurus/tsconfig": "3.0.1",
     "@docusaurus/types": "3.0.1",
-    "typescript": "~5.2.2",
     "@types/aws-serverless-express": "^3.3.9",
+    "@types/express": "^4.17.21",
     "serverless-apigw-binary": "^0.4.4",
     "serverless-domain-manager": "^7.3.3",
     "serverless-dotenv-plugin": "^6.0.0",
-    "serverless-offline": "^13.3.2"
+    "serverless-offline": "^13.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.2.2"
   },
   "browserslist": {
     "production": [

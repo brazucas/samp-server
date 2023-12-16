@@ -1,7 +1,7 @@
-import { createServer, proxy } from "aws-serverless-express";
-import { eventContext } from "aws-serverless-express/middleware.js";
+const { createServer, proxy } = require("aws-serverless-express");
+const { eventContext } = require("aws-serverless-express/middleware");
 
-import express from "express";
+const express = require("express");
 
 const binaryMimeTypes = [
   "image/jpeg",
@@ -16,7 +16,7 @@ const binaryMimeTypes = [
 
 let cachedServer;
 
-async function bootstrapServer() {
+function bootstrapServer() {
   const base = "/";
 
   if (!cachedServer) {
@@ -29,7 +29,9 @@ async function bootstrapServer() {
   return cachedServer;
 }
 
-export const handler = async (event, context) => {
-  cachedServer = await bootstrapServer();
+const handler = async (event, context) => {
+  cachedServer = bootstrapServer();
   return proxy(cachedServer, event, context, "PROMISE").promise;
 };
+
+exports.handler = handler;
