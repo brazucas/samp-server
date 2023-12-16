@@ -1,5 +1,4 @@
 #include <a_samp>
-#include <YSI_Coding\y_hooks>
 #include <YSI_Data\y_foreach>
 
 #define MAX_ATTRIBUTE_LEVEL 100
@@ -23,8 +22,8 @@ enum PlayerAttributeTypeMapping {
 }
 
 new PlayerAttributeType:attributesTypeMapping[PlayerAttributeType][PlayerAttributeTypeMapping] = {
-    {THIRST, 1, 60000},
-    {HUNGER, 1, 20000}
+    {THIRST, 1, 20000},
+    {HUNGER, 1, 60000}
 };
 
 new playerAttribute[MAX_PLAYERS][PlayerAttributeType][PlayerAttribute];
@@ -95,7 +94,7 @@ stock _SetPlayerAttributeLevel(playerid, PlayerAttributeType:type, level)
 
     playerAttribute[playerid][type][LEVEL] = level;
 
-    CallLocalFunction(attributeUpdateCallback[type], "if", playerid, level);
+    CallLocalFunction(attributeUpdateCallback[type], "ii", playerid, level);
     
     return 1;
 }
