@@ -1,0 +1,64 @@
+name: docs cd
+
+run-name: Deploy docs to live by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    env:
+      working_path: docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository code
+        uses: actions/checkout@v2
+      - name: Setup the Terraform CLI
+        uses: hashicorp/setup-terraform@v2
+      - name: Setup AWS Credentials
+        run: |
+          mkdir ~/.aws
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
+          echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+          AWS_PROFILE=default && echo AWS_PROFILE=$AWS_PROFILE >> $GITHUB_ENV
+      - name: Initialize the Terraform working directory
+        working-directory: ${{ env.working_path }}/.cicd/terraform
+        id: init
+        run: terraform init -input=false
+      - name: Apply the Terraform execution plan
+        working-directory: ${{ env.working_path }}/.cicd/terraform
+        id: plan
+        run: terraform apply -no-color -auto-approve
+        env:
+          TF_VAR_github_pat: ${{ secrets.GH_PAT }}
+
+  build_and_sync:
+    name: Build project and Deploy
+    runs-on: ubuntu-latest
+    environment: docs
+    env:
+      working_path: docs
+    steps:
+      - name: Clone the repository code
+        uses: actions/checkout@v2
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "lts/*"
+      - name: Build project
+        working-directory: ${{ env.working_path }}
+        run: |
+          npm install
+          npm run build
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: sa-east-1
+      - name: serverless deploy
+        uses: serverless/github-action@v3.2
+        with:
+          args: -c "cd ./${{ env.working_path }} && serverless deploy"
+          entrypoint: /bin/sh
