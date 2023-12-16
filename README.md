@@ -1,28 +1,18 @@
-[![server-ci](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml/badge.svg)](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml)
+[![server-ci](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml/badge.svg)](https://github.com/brazucas/samp-server/actions/workflows/server-ci.yml) [![docs cd](https://github.com/brazucas/samp-server/actions/workflows/docs-cd.yml/badge.svg)](https://github.com/brazucas/samp-server/actions/workflows/docs-cd.yml)
 
 # samp-server
 
-Our SA-MP server codebase.
+BRZ SA-MP server.
 
 ## [![sampctl](https://img.shields.io/badge/sampctl-brz-2f2f2f.svg?style=for-the-badge)](https://github.com/pedropapa/samp-server)
 
-This API uses sampctl to manage dependencies, compile and run the server. You can find more information about sampctl [here](https://github.com/Southclaws/sampctl).
+This codebase uses sampctl to manage dependencies, compile and run the server. You can find more information about sampctl [here](https://github.com/Southclaws/sampctl).
 
 # 👨‍💻 Contributing
 
 Feel free to contribute to the project, whether it's fixing bugs, adding new features or improving the documentation.
 
-## 🧞 Basic Commands
-
-All avaliable commands in [pawn.json](pawn.json):
-
-| Command                | Action                                               |
-| :--------------------- | :--------------------------------------------------- |
-| `sampctl ensure`       | Ensures all project dependencies (Only needed once)  |
-| `sampctl build main`   | Build the main gamemode                              |
-| `sampctl build tests`  | Build the gamemode for running tests                 |
-| `sampctl run`          | Runs the server with the built gamemode              |
-| `docker-compose up`    | Uses Docker for running dev environment dependencies |
+[View Documentation](https://docs.samp.brz.gg).
 
 ## 👀 Interested in joining the team? 
 
