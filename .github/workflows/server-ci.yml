@@ -9,9 +9,10 @@ on:
   pull_request:
     paths:
       - '**'
-      - '!*.md'
-      - '!docs/**'
-      - '!.github/workflows/docs*'
+    paths-ignore: 
+      - 'docs/**'
+      - '.github/workflows/docs*'
+      - '*.md'
   workflow_dispatch:
 
 jobs:
