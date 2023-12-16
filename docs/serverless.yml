@@ -1,0 +1,54 @@
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-domain-manager
+  - serverless-offline
+  - serverless-apigw-binary
+custom:
+  apigwBinary:
+    types:
+      - "*/*"
+  customDomain:
+    domainName: docs.samp.brz.gg
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+    certificateName: docs.samp.brz.gg
+
+service: docs-samp
+useDotenv: true
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  memorySize: 128
+  iam:
+    role: arn:aws:iam::408356563302:role/brz_lambda
+package:
+  excludeDevDependencies: true
+  patterns:
+    - build/**
+    - lambda.ts
+    - package.json
+    - package-lock.lock
+    - '!.cicd/**'
+    - '!terraform/**'
+    - '!test/**'
+    - '!static/**'
+    - '!.serverless/**'
+functions:
+  app:
+    handler: lambda.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors:
+            origins: 
+              - https://docs.samp.brz.gg
+      - http:
+          method: any
+          path: /{any+}
+          cors:
+            origins: 
+              - https://docs.samp.brz.gg
