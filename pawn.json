@@ -14,7 +14,7 @@
     "plugins": [],
     "mode": "server",
     "rcon_password": "password",
-    "port": 7778,
+    "port": 7777,
     "hostname": "SA-MP Server",
     "maxplayers": 50,
     "language": "",

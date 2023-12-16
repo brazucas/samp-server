@@ -1,0 +1,8 @@
+{
+  "label": "BRZ_Core",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Functions that uses SA-MP scripting apis and hardly changes, i.e. server version, control server state, etc."
+  }
+}
