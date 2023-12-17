@@ -13,6 +13,7 @@ static enum PlayerAttribute {
 enum PlayerAttributeType {
     THIRST,
     HUNGER,
+    SLEEP,
 }
 
 enum PlayerAttributeTypeMapping {
@@ -23,18 +24,21 @@ enum PlayerAttributeTypeMapping {
 
 new PlayerAttributeType:attributesTypeMapping[PlayerAttributeType][PlayerAttributeTypeMapping] = {
     {THIRST, 1, 20000},
-    {HUNGER, 1, 60000}
+    {HUNGER, 1, 60000},
+    {SLEEP, 1, 80000}
 };
 
 new playerAttribute[MAX_PLAYERS][PlayerAttributeType][PlayerAttribute];
 new attributeUpdateCallback[PlayerAttributeType][32] = {
     {"OnPlayerThirstUpdate"},
-    {"OnPlayerHungerUpdate"}
+    {"OnPlayerHungerUpdate"},
+    {"OnPlayerSleepUpdate"}
 };
 
 new maxAttributeLevelReachedCb[PlayerAttributeType][32] = {
     {"OnMaxThirstLevelReached"},
-    {"OnMaxHungerLevelReached"}
+    {"OnMaxHungerLevelReached"},
+    {"OnMaxSleepLevelReached"}
 };
 
 stock _GetPlayerAttributeLevel(playerid, PlayerAttributeType:type)
