@@ -1,0 +1,8 @@
+{
+  "label": "Systems",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Server gamemode packages"
+  }
+}

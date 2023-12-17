@@ -1,0 +1,8 @@
+{
+  "label": "player_state",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Controls the player-related systems such as HUDs, hunger, thirst, sleep, etc."
+  }
+}
