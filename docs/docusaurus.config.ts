@@ -84,7 +84,7 @@ const config: Config = {
           items: [
             {
               label: "Discord",
-              href: "https://discord.brz.gg",
+              href: "http://discord.brz.gg",
             },
           ],
         },
