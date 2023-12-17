@@ -6,6 +6,7 @@
 #include <huds\server_info_hud>
 #include <attribute_state>
 #include <api>
+#include <state_listeners>
 #include <YSI_Coding\y_hooks>
 #include <YSI_Data\y_foreach>
 

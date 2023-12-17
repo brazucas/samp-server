@@ -33,8 +33,8 @@ new attributeUpdateCallback[PlayerAttributeType][32] = {
 };
 
 new maxAttributeLevelReachedCb[PlayerAttributeType][32] = {
-    {"OnPlayerMaxThirstLevelReached"},
-    {"OnPlayerMaxHungerLevelReached"}
+    {"OnMaxThirstLevelReached"},
+    {"OnMaxHungerLevelReached"}
 };
 
 stock _GetPlayerAttributeLevel(playerid, PlayerAttributeType:type)
