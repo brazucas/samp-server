@@ -34,9 +34,10 @@ const config: Config = {
       "classic",
       {
         docs: {
+          path: "pages",
           routeBasePath: "/",
           sidebarPath: "./sidebars.ts",
-          editUrl: "https://github.com/brazucas/samp-server/tree/main/docs",
+          editUrl: "https://github.com/brazucas/samp-server/tree/main/pages",
         },
         pages: false,
         blog: false,
