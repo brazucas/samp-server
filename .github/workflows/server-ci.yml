@@ -6,6 +6,10 @@ on:
   push:
     branches:
       - main
+    paths-ignore: 
+      - 'docs/**'
+      - '.github/workflows/docs*'
+      - '*.md'
   pull_request:
     paths-ignore: 
       - 'docs/**'
