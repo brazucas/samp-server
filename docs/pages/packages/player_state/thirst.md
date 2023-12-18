@@ -2,16 +2,9 @@
 sidebar_position: 2
 ---
 
-# Thirst System
+# thirst
 
 Player will lose thirst over time. If the player's thirst reaches 0, they will start losing health. A thirst bar will be displayed on the player's HUD.
-
-## How it works
-
-- Player starts with 0 thirst points.
-- Player loses 1 thirst point every minute.
-- If the player's thirst reaches the maximum (100), they will start losing 10 health points every 20 seconds.
-- To regain thirst points, the player must drink. Each drink item will restore a different amount of thirst points.
 
 ## Callbacks
 
