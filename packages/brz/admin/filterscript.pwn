@@ -1,4 +1,5 @@
 #include <a_samp>
+#include <BRZ_SAMP\screen_fader>
 #include <YSI_Visual\y_commands>
 #include <BRZ_Scripting\brz_scripting_logging>
 
@@ -40,6 +41,20 @@ YCMD:logpos(playerid, const params[], help)
 	GetPlayerFacingAngle(playerid, angle);
 
 	log_info(LOG_NAMESPACE, "Player %s position: %f, %f, %f, heading: %f", playerName, x, y, z, angle);
+
+	return 1;
+}
+
+YCMD:fadescreen(playerid, const params[], help)
+{
+	FadePlayerScreenToColor(playerid, FADE_COLOR_BLACK, NORMAL_FADE);
+
+	return 1;
+}
+
+YCMD:clearscreen(playerid, const params[], help)
+{
+	ClearPlayerScreenFade(playerid);
 
 	return 1;
 }
