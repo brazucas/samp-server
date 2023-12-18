@@ -1,14 +1,18 @@
 #include <BRZ_SAMP\screen_fader>
 #include <YSI_Coding\y_hooks>
 
+#define SLEEP_MESSAGES_SIZE 5
+
 #define HUNGER_HEALTH_PUNISHMENT 10.0
+
+forward OnPlayerSleepUpdate(playerid, level);
 
 enum SleepMessage {
     LEVEL,
     MESSAGE[128]
 }
 
-new sleepMessages[5][128] = {
+new sleepMessages[SLEEP_MESSAGES_SIZE][SleepMessage] = {
     {72, "Voce esta com sono, voce precisa dormir."},
     {74, "Voce esta com muito sono, voce precisa dormir."},
     {76, "Voce esta com muito muito sono, voce precisa dormir."},
@@ -16,14 +20,17 @@ new sleepMessages[5][128] = {
     {80, "Voce esta com muito muito muito muito sono, voce precisa dormir."}
 };
 
-static stock GetSleepMessageForLevel(level)
+static stock GetSleepMessageForLevel(level, message[])
 {
     for (new index = 0; index < sizeof(sleepMessages); index++) {
         if (sleepMessages[index][LEVEL] == level) {
-            return sleepMessages[index][MESSAGE];
+            format(message, 128, "%s", sleepMessages[index][MESSAGE]);
+            return 1;
         }
     }
-    return "";
+
+    format(message, 128, "");
+    return 0;
 }
 
 hook OnMaxHungerLevelReached(playerid)
@@ -38,7 +45,7 @@ hook OnMaxThirstLevelReached(playerid)
     continue();
 }
 
-hook OnPlayerSleepUpdate(playerid, level)
+public OnPlayerSleepUpdate(playerid, level)
 {
     if (level >= 100) {
         SendClientMessage(playerid, 0xFF000000, "Acabou dormindo sozinho...~n~Você não é uma máquina!");
@@ -48,16 +55,23 @@ hook OnPlayerSleepUpdate(playerid, level)
         if (GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
             ApplyAnimation(playerid,"CRACK","crckidle2",4.1,1,1,1,1,1);
         }
-    } else if (strlen(sleepMessages[level])) {
+
+        return 1;
+    } 
+    
+    new message[128];
+    GetSleepMessageForLevel(level, message);
+
+    if (strlen(message)) {
         if (GetPlayerState(playerid) == PLAYER_STATE_ONFOOT) {
             ApplyAnimation(playerid,"FAT","IDLE_tired",4.1,0,0,0,0,0);
         }
 
-        SendClientMessage(playerid, 0xFF000000, sleepMessages[level]);
+        SendClientMessage(playerid, 0xFF000000, message);
         FadePlayerScreenToColor(playerid, FADE_COLOR_BLACK, NORMAL_FADE);
     }
 
-    continue();
+    return 1;
 }
 
 static stock HungerThirstPunishment(playerid)

@@ -8,7 +8,6 @@
 #include <api>
 #include <state_listeners>
 #include <YSI_Coding\y_hooks>
-#include <YSI_Data\y_foreach>
 
 public OnFilterScriptInit()
 {
@@ -28,7 +27,7 @@ public OnFilterScriptInit()
 	return 1;
 }
 
-public OnPlayerDisconnect(playerid)
+public OnPlayerDisconnect(playerid, reason)
 {
 	DestroyPlayerMoneyHud(playerid);
 	DestroyPlayerHungerHud(playerid);
@@ -61,7 +60,7 @@ hook OnBRZPlayerAuth(playerid)
 	InitialisePlayerHuds(playerid);
 	InitialisePlayerAttributeStates(playerid);
 
-	return 1;
+	continue();
 }
 
 public OnPlayerSpawn(playerid)
