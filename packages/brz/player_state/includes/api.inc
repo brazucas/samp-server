@@ -1,13 +1,14 @@
-forward SetPlayerHungerLevel(playerid, level);
-forward GetPlayerHungerLevel(playerid);
+forward ShowPlayerHungerHud(playerid);
+forward HidePlayerHungerHud(playerid);
 
-public SetPlayerHungerLevel(playerid, level)
+public ShowPlayerHungerHud(playerid)
 {
-    _SetPlayerAttributeLevel(playerid, HUNGER, level);
+    _ShowPlayerHungerHud(playerid);
     return 1;
 }
 
-public GetPlayerHungerLevel(playerid)
+public HidePlayerHungerHud(playerid)
 {
-    return _GetPlayerAttributeLevel(playerid, HUNGER);
+    _HidePlayerHungerHud(playerid);
+    return 1;
 }

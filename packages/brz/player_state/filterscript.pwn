@@ -86,7 +86,7 @@ stock ShowPlayerHuds(playerid)
 {
 	ShowServerInfoHud(playerid);
 	ShowPlayerMoney(playerid);
-	ShowPlayerHunger(playerid);
+	_ShowPlayerHungerHud(playerid);
 	ShowPlayerThirst(playerid);
 	return 1;
 }

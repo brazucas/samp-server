@@ -55,10 +55,16 @@ stock InitialiseHungerHud(playerid)
 	PlayerTextDrawTextSize(playerid, playerHungerTextDraw[playerid][TD_HUNGER_LEVEL], 601.000000, 0.000000);
 }
 
-stock ShowPlayerHunger(playerid)
+stock _ShowPlayerHungerHud(playerid)
 {
     TextDrawShowForPlayer(playerid, Text:hungerTextDraw[TD_HUNGER_OUTLINE]);
     TextDrawShowForPlayer(playerid, Text:hungerTextDraw[TD_HUNGER_FILL]);
+}
+
+stock _HidePlayerHungerHud(playerid)
+{
+    TextDrawHideForPlayer(playerid, Text:hungerTextDraw[TD_HUNGER_OUTLINE]);
+    TextDrawHideForPlayer(playerid, Text:hungerTextDraw[TD_HUNGER_FILL]);
 }
 
 stock DestroyPlayerHungerHud(playerid)

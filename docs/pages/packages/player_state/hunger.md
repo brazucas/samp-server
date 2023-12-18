@@ -2,16 +2,9 @@
 sidebar_position: 1
 ---
 
-# Hunger System
+# hunger
 
-Player will lose hunger over time. If the player's hunger reaches 0, they will start losing health. A hunger bar will be displayed on the player's HUD.
-
-## How it works
-
-- Player starts with 0 hunger points.
-- Player loses 1 hunger point every minute.
-- If the player's hunger reaches the maximum (100), they will start losing 10 health points every minute.
-- To regain hunger points, the player must eat food. Each food item will restore a different amount of hunger points.
+Controls the player's hunger level and its related HUD.
 
 ## Callbacks
 
@@ -40,3 +33,9 @@ hook OnMaxHungerLevelReached(playerid)
 	return 1;
 }
 ```
+
+### `ShowPlayerHungerHud(playerid)`
+Show player's hunger hud.
+
+### `HidePlayerHungerHud(playerid)`
+Hides player's hunger hud.
