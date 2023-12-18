@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Bridge APIs
 
-Function wrappers for calling SA-MP remote functions i.e. filterscripts, plugins, etc.
+Function wrappers for calling packages APIs from within other packages.
 
 ### `bool:IsPlayerLoggedIn(playerid)`
 
-Returns whether the player is authenticated or not.
+Returns whether the player is authenticated in the server.
 
 ```cpp
 #include <BRZ_Scripting\brz_apis>
