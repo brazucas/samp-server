@@ -8,4 +8,4 @@ Welcome to BRZ.GG samp-server documentation. This documentation is powered by [D
 
 - [Quick Start](quickstart)
 - [Includes](category/includes)
-- [Systems](category/systems)
+- [Packages](category/packages)
