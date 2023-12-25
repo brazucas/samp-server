@@ -61,3 +61,6 @@ control.cfg
 !plugins/sampvoice.so
 
 /dependencies
+
+# YSF
+!plugins/YSF.cfg

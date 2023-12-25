@@ -6,13 +6,14 @@
   "dependencies": [
     "pawn-lang/samp-stdlib",
     "pawn-lang/YSI-Includes@5.x",
-    "pBlueG/SA-MP-MySQL:R41-4"
+    "pBlueG/SA-MP-MySQL:R41-4",
+    "IllidanS4/YSF:v2.2"
   ],
   "local": true,
   "runtime": {
     "version": "0.3.7",
-    "plugins": [],
     "mode": "server",
+    "plugins": ["YSF"],
     "rcon_password": "password",
     "port": 7777,
     "hostname": "SA-MP Server",

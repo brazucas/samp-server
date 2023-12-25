@@ -4,7 +4,11 @@
   "tag": "0.0.1",
   "entry": "test.pwn",
   "output": "test.amx",
-  "dependencies": ["pawn-lang/samp-stdlib", "pawn-lang/YSI-Includes@5.x"],
+  "dependencies": [
+    "pawn-lang/samp-stdlib",
+    "pawn-lang/YSI-Includes@5.x",
+    "IllidanS4/YSF"
+  ],
   "builds": [
     {
       "name": "main",
