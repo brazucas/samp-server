@@ -104,3 +104,6 @@ stock DestroyAttributeState()
     }
     return 1;
 }
+
+#include <state_listeners\sleep_listener>
+#include <state_listeners\hunger_thirst_listener>
