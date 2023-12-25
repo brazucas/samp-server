@@ -14,13 +14,14 @@ public OnFilterScriptInit()
 	print("========================BRZ_PLAYER_STATE STARTED========================");
 	
 	InitialiseServerHud();
+	InitialiseAttributeState();
 
 	foreach (new playerid : Player) {
 		if (IsPlayerLoggedIn(playerid)) {
 			InitialisePlayerHuds(playerid);
 			ShowPlayerHuds(playerid);
 
-			InitialisePlayerAttributeStates(playerid);
+			InitialisePlayerAttributeState(playerid);
 		}
 	}
 
@@ -33,7 +34,7 @@ public OnPlayerDisconnect(playerid, reason)
 	DestroyPlayerHungerHud(playerid);
 	DestroyPlayerThirstHud(playerid);
 
-	DestroyPlayerAttributeStates(playerid);
+	DestroyPlayerAttributeState(playerid);
 	return 1;
 }
 
@@ -45,8 +46,7 @@ public OnFilterScriptExit()
 	DestroyPlayerMoneyHudForAll();
 	DestroyPlayerHungerHudForAll();
 	DestroyPlayerThirstHudForAll();
-
-	DestroyAttributeStateForAll();
+	DestroyAttributeState();
 	return 1;
 }
 
@@ -58,7 +58,7 @@ hook OnBRZPlayerAuth(playerid)
 	SpawnPlayer(playerid);
 
 	InitialisePlayerHuds(playerid);
-	InitialisePlayerAttributeStates(playerid);
+	InitialisePlayerAttributeState(playerid);
 
 	continue();
 }

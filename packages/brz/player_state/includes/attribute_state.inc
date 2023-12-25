@@ -3,12 +3,7 @@
 
 #define MAX_ATTRIBUTE_LEVEL 100
 
-forward IncrementAttributeLevel(playerid, PlayerAttributeType:type);
-
-static enum PlayerAttribute {
-    LEVEL,
-    TIMER,
-}
+forward IncrementAttributeLevel(PlayerAttributeType:type);
 
 enum PlayerAttributeType {
     THIRST,
@@ -28,7 +23,9 @@ new PlayerAttributeType:attributesTypeMapping[PlayerAttributeType][PlayerAttribu
     {SLEEP, 1, 80000}
 };
 
-new playerAttribute[MAX_PLAYERS][PlayerAttributeType][PlayerAttribute];
+new playerAttribute[MAX_PLAYERS][PlayerAttributeType];
+new attributeStateTimer[PlayerAttributeType];
+
 new attributeUpdateCallback[PlayerAttributeType][32] = {
     {"OnPlayerThirstUpdate"},
     {"OnPlayerHungerUpdate"},
@@ -43,45 +40,7 @@ new maxAttributeLevelReachedCb[PlayerAttributeType][32] = {
 
 stock _GetPlayerAttributeLevel(playerid, PlayerAttributeType:type)
 {
-    return playerAttribute[playerid][type][LEVEL];
-}
-
-public IncrementAttributeLevel(playerid, PlayerAttributeType:type)
-{
-    _SetPlayerAttributeLevel(playerid, type, _GetPlayerAttributeLevel(playerid, type) + attributesTypeMapping[type][DEFAULT_INCREMENT]);
-    return 1;
-}
-
-stock InitialisePlayerAttributeStates(playerid)
-{
-    for(new typeIndex = 0; typeIndex < sizeof(attributesTypeMapping); typeIndex++) {
-        InitialisePlayerAttributeState(playerid, attributesTypeMapping[typeIndex][MAPPING_TYPE]);
-    }
-    return 1;
-}
-
-static stock InitialisePlayerAttributeState(playerid, PlayerAttributeType:type)
-{
-    _SetPlayerAttributeLevel(playerid, type, 0);
-    playerAttribute[playerid][type][TIMER] = SetTimerEx("IncrementAttributeLevel", attributesTypeMapping[type][DEFAULT_INCREMENT_INTERVAL], true, "ii", playerid, _:type);
-
-    return 1;
-}
-
-stock DestroyPlayerAttributeStates(playerid)
-{
-    for(new typeIndex = 0; typeIndex < sizeof(attributesTypeMapping); typeIndex++) {
-        KillTimer(playerAttribute[playerid][attributesTypeMapping[typeIndex][MAPPING_TYPE]][TIMER]);
-    }
-    return 1;
-}
-
-stock DestroyAttributeStateForAll()
-{
-    foreach(new playerid : Player) {
-        DestroyPlayerAttributeStates(playerid);
-    }
-    return 1;
+    return playerAttribute[playerid][type];
 }
 
 stock _SetPlayerAttributeLevel(playerid, PlayerAttributeType:type, level)
@@ -96,9 +55,52 @@ stock _SetPlayerAttributeLevel(playerid, PlayerAttributeType:type, level)
         CallLocalFunction(maxAttributeLevelReachedCb[type], "i", playerid);
     }
 
-    playerAttribute[playerid][type][LEVEL] = level;
+    playerAttribute[playerid][type] = level;
 
     CallLocalFunction(attributeUpdateCallback[type], "ii", playerid, level);
     
+    return 1;
+}
+
+public IncrementAttributeLevel(PlayerAttributeType:type)
+{
+    foreach(new playerid : Player) {
+        _SetPlayerAttributeLevel(playerid, type, _GetPlayerAttributeLevel(playerid, type) + attributesTypeMapping[type][DEFAULT_INCREMENT]);
+    }
+    
+    return 1;
+}
+
+stock InitialisePlayerAttributeState(playerid)
+{
+    for(new typeIndex = 0; typeIndex < sizeof(attributesTypeMapping); typeIndex++) {
+        _SetPlayerAttributeLevel(playerid, attributesTypeMapping[PlayerAttributeType:typeIndex][MAPPING_TYPE], 0);
+    }
+    return 1;
+}
+
+stock DestroyPlayerAttributeState(playerid)
+{
+    for(new typeIndex = 0; typeIndex < sizeof(attributesTypeMapping); typeIndex++) {
+        _SetPlayerAttributeLevel(playerid, attributesTypeMapping[PlayerAttributeType:typeIndex][MAPPING_TYPE], 0);
+    }
+    return 1;
+}
+
+stock InitialiseAttributeState()
+{
+    for(new typeIndex = 0; typeIndex < sizeof(attributesTypeMapping); typeIndex++) {
+        new PlayerAttributeType:type = attributesTypeMapping[PlayerAttributeType:typeIndex][MAPPING_TYPE];
+        attributeStateTimer[type] = SetTimerEx("IncrementAttributeLevel", attributesTypeMapping[type][DEFAULT_INCREMENT_INTERVAL], true, "ii", _:type);
+    }
+
+    return 1;
+}
+
+stock DestroyAttributeState()
+{
+    for(new typeIndex = 0; typeIndex < sizeof(attributesTypeMapping); typeIndex++) {
+        KillTimer(attributeStateTimer[attributesTypeMapping[PlayerAttributeType:typeIndex][MAPPING_TYPE]]);
+    }
     return 1;
 }
